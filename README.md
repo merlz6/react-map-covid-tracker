@@ -66,3 +66,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+React map from https://www.npmjs.com/package/react-usa-map
+
+npm install react-usa-map --save
+
+Covid Tracker Api :
+https://covidtracking.com/data/api
