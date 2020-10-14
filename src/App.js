@@ -15,12 +15,16 @@ class App extends Component {
     hospitalizations:'',
     stateShow:{},
     stateNotes:{},
-    nationalInfo:{}
+    nationalInfo:{},
+    nationalToday:{},
+    national7day:{},
+    avgCases7day:null,
+    avgDeaths7day:null
   }
 }
   componentDidMount(){
     this.nationalPull()
-
+    this.nationalHistoric()
   }
 
     nationalPull = async()=> {
@@ -28,6 +32,24 @@ class App extends Component {
     .then( data => this.setState({ nationalInfo: data.data[0]}))
     console.log('this is national death' , this.state.nationalInfo)
   }
+  calculate7day = () => {
+    this.setState({
+      avgCases7day:((this.state.nationalToday.positive / this.state.national7day.positive) - 1).toFixed(2),
+      avgDeaths7day:((this.state.nationalToday.death / this.state.national7day.death) -1).toFixed(2)
+    })
+    console.log('7 day: ', this.state.avgDeaths7day)
+  }
+
+  nationalHistoric = async()=> {
+    await axios.get('https://api.covidtracking.com/v1/us/daily.json')
+    .then(data => this.setState({
+      nationalToday: data.data[0],
+      national7day:data.data[6]
+    } ))
+    this.calculate7day()
+    // console.log((this.state.nationalToday.positive / this.state.national7day.positive) - 1)
+  }
+
 
   mapHandler = (event) => {
     let state = (event.target.dataset.name).toLowerCase()
@@ -44,7 +66,6 @@ class App extends Component {
     axios.get('https://api.covidtracking.com/v1/states/' + `${state}` +'/info.json')
     .then(data => this.setState({stateNotes: data.data} ))
     // console.log(this.state.stateNotes)
-
 
 
 
@@ -70,7 +91,7 @@ class App extends Component {
   render() {
   return (
     <div className="App">
-      <Nation nationalInfo={this.state.nationalInfo}/>
+      <Nation nationalInfo={this.state.nationalInfo} avgCases7day={this.state.avgCases7day} avgDeaths7day ={this.state.avgDeaths7day}/>
       <h1>Covid Tracking Map </h1>
       <p><em>Click on any state to begin</em></p>
       <USAMap customize={this.statesFilling()} onClick={this.mapHandler} />

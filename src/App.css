@@ -31,6 +31,7 @@
   justify-content: space-around;
   margin-bottom: 50px;
   background-color: red;
+  height:100px;
 }
 
 .nationalDivHolders{
@@ -41,8 +42,8 @@
   margin:0 10px;
   width:20%;
   color:ghostWhite;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid ghostWhite;
+  border-right: 1px solid ghostWhite;
 }
 
 h5 {
@@ -50,4 +51,9 @@ h5 {
   margin-top:5px;
   margin-bottom: 15px;
   height:32px;
+}
+
+.individualNationInfoDivs p {
+  font-weight: 500;
+  font-size: 1.2em;
 }
