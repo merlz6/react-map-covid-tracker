@@ -11,10 +11,17 @@
 }
 .infoHolder {
   margin:0 15px;
-  width:15%;
+  width:20%;
   border:5px solid black;
 }
 
 .infoLabels {
   font-weight: bold;
+}
+.smallWriting {
+  font-size: 25%;
+  font-style: italic;
+}
+.notesHolder {
+  margin:30px 60px;
 }

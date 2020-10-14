@@ -13,11 +13,13 @@ class App extends Component {
     stateDeaths:'',
     state:'',
     hospitalizations:'',
-    stateShow:{}
+    stateShow:{},
+    stateNotes:{}
   }
 }
   mapHandler = (event) => {
     let state = (event.target.dataset.name).toLowerCase()
+    // individual state info axios
     axios.get('https://api.covidtracking.com/api/v1/states/' + `${state}` +'/current.json')
     .then(data => this.setState({
       stateDeaths:data.data.death,
@@ -26,6 +28,11 @@ class App extends Component {
       stateShow:data.data
     }) )
     console.log(this.state.stateShow)
+    // notes axios
+    axios.get('https://api.covidtracking.com/v1/states/' + `${state}` +'/info.json')
+    .then(data => this.setState({stateNotes: data.data} ))
+    // console.log(this.state.stateNotes)
+
     if(this.state.state !== ''){
         alert(`${this.state.state} currently has ${this.state.stateDeaths} deaths and  ${this.state.hospitalizedCurrently} current hospitalizations`)
     }
@@ -48,10 +55,11 @@ class App extends Component {
   render() {
   return (
     <div className="App">
-      <h1>Covid Tracking Map</h1>
+      <h1>Covid Tracking Map </h1>
+      <p><em>Click on any state to begin</em></p>
       <USAMap customize={this.statesFilling()} onClick={this.mapHandler} />
       <p>More information: <a href="http://github.com/gabidavila/react-usa-map">GitHub</a></p>
-      {this.state.state !== '' ? <State info={this.state.stateShow}/> : ''}
+      {this.state.state !== '' ? <State info={this.state.stateShow} notes={this.state.stateNotes.notes}/> : ''}
 
     </div>
   );
