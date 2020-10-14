@@ -25,3 +25,29 @@
 .notesHolder {
   margin:30px 60px;
 }
+.nationalInfoHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  background-color: red;
+}
+
+.nationalDivHolders{
+  display: flex;
+  flex-direction: row;
+}
+.individualNationInfoDivs{
+  margin:0 10px;
+  width:20%;
+  color:ghostWhite;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+h5 {
+  font-size: 1.1em;
+  margin-top:5px;
+  margin-bottom: 15px;
+  height:32px;
+}

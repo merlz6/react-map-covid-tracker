@@ -4,7 +4,7 @@ import './App.css';
 import USAMap from "react-usa-map";
 import axios from 'axios';
 import State from './State.js'
-
+import Nation from './Nation.js'
 class App extends Component {
   constructor(props){
     super(props)
@@ -14,9 +14,21 @@ class App extends Component {
     state:'',
     hospitalizations:'',
     stateShow:{},
-    stateNotes:{}
+    stateNotes:{},
+    nationalInfo:{}
   }
 }
+  componentDidMount(){
+    this.nationalPull()
+
+  }
+
+    nationalPull = async()=> {
+    await axios.get('https://api.covidtracking.com/v1/us/current.json')
+    .then( data => this.setState({ nationalInfo: data.data[0]}))
+    console.log('this is national death' , this.state.nationalInfo)
+  }
+
   mapHandler = (event) => {
     let state = (event.target.dataset.name).toLowerCase()
     // individual state info axios
@@ -32,6 +44,9 @@ class App extends Component {
     axios.get('https://api.covidtracking.com/v1/states/' + `${state}` +'/info.json')
     .then(data => this.setState({stateNotes: data.data} ))
     // console.log(this.state.stateNotes)
+
+
+
 
     if(this.state.state !== ''){
         alert(`${this.state.state} currently has ${this.state.stateDeaths} deaths and  ${this.state.hospitalizedCurrently} current hospitalizations`)
@@ -55,6 +70,7 @@ class App extends Component {
   render() {
   return (
     <div className="App">
+      <Nation nationalInfo={this.state.nationalInfo}/>
       <h1>Covid Tracking Map </h1>
       <p><em>Click on any state to begin</em></p>
       <USAMap customize={this.statesFilling()} onClick={this.mapHandler} />
